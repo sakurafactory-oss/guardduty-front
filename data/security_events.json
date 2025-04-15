@@ -1,0 +1,175 @@
+[
+    {
+        "id": "event-001",
+        "timestamp": "2025-04-15T10:30:00Z",
+        "source_ip": "192.168.1.100",
+        "event_type": "login_attempt",
+        "severity": "high",
+        "details": {
+            "username": "admin",
+            "success": false,
+            "attempt_count": 5,
+            "location": "Tokyo, Japan",
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        },
+        "related_events": [
+            "event-002",
+            "event-003"
+        ],
+        "status": "open"
+    },
+    {
+        "id": "event-002",
+        "timestamp": "2025-04-15T10:25:00Z",
+        "source_ip": "192.168.1.101",
+        "event_type": "file_access",
+        "severity": "medium",
+        "details": {
+            "file_path": "/etc/passwd",
+            "user": "user1",
+            "operation": "read",
+            "process_id": 1234,
+            "process_name": "bash"
+        },
+        "related_events": [
+            "event-001"
+        ],
+        "status": "investigating"
+    },
+    {
+        "id": "event-003",
+        "timestamp": "2025-04-15T10:20:00Z",
+        "source_ip": "192.168.1.102",
+        "event_type": "network_scan",
+        "severity": "critical",
+        "details": {
+            "ports_scanned": [
+                22,
+                80,
+                443,
+                3306,
+                5432
+            ],
+            "scan_type": "SYN scan",
+            "duration_seconds": 120,
+            "packets_sent": 1000
+        },
+        "related_events": [
+            "event-001",
+            "event-004"
+        ],
+        "status": "open"
+    },
+    {
+        "id": "event-004",
+        "timestamp": "2025-04-15T10:15:00Z",
+        "source_ip": "192.168.1.103",
+        "event_type": "malware_detected",
+        "severity": "critical",
+        "details": {
+            "malware_name": "Trojan.Downloader",
+            "file_path": "/tmp/update.exe",
+            "hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+            "action_taken": "quarantined"
+        },
+        "related_events": [
+            "event-003",
+            "event-005"
+        ],
+        "status": "resolved",
+        "resolution_time": "2025-04-15T11:30:00Z"
+    },
+    {
+        "id": "event-005",
+        "timestamp": "2025-04-15T10:10:00Z",
+        "source_ip": "192.168.1.104",
+        "event_type": "privilege_escalation",
+        "severity": "high",
+        "details": {
+            "user": "user2",
+            "target_privilege": "root",
+            "method": "sudo exploit",
+            "command_executed": "sudo -u root /bin/bash"
+        },
+        "related_events": [
+            "event-004"
+        ],
+        "status": "open"
+    },
+    {
+        "id": "event-006",
+        "timestamp": "2025-04-15T10:05:00Z",
+        "source_ip": "192.168.1.105",
+        "event_type": "data_exfiltration",
+        "severity": "high",
+        "details": {
+            "destination_ip": "203.0.113.100",
+            "data_size_bytes": 1048576,
+            "protocol": "HTTPS",
+            "destination_domain": "suspicious-domain.com"
+        },
+        "status": "investigating"
+    },
+    {
+        "id": "event-007",
+        "timestamp": "2025-04-15T10:00:00Z",
+        "source_ip": "192.168.1.106",
+        "event_type": "configuration_change",
+        "severity": "medium",
+        "details": {
+            "component": "firewall",
+            "change_type": "rule_added",
+            "user": "admin",
+            "description": "Added rule to allow all traffic from 203.0.113.0/24"
+        },
+        "status": "resolved",
+        "resolution_time": "2025-04-15T10:30:00Z"
+    },
+    {
+        "id": "event-008",
+        "timestamp": "2025-04-15T09:55:00Z",
+        "source_ip": "192.168.1.107",
+        "event_type": "ddos_attack",
+        "severity": "critical",
+        "details": {
+            "attack_type": "SYN flood",
+            "target_service": "web server",
+            "packets_per_second": 10000,
+            "duration_seconds": 300,
+            "mitigation_applied": "rate limiting"
+        },
+        "status": "mitigated"
+    },
+    {
+        "id": "event-009",
+        "timestamp": "2025-04-15T09:50:00Z",
+        "source_ip": "192.168.1.108",
+        "event_type": "unauthorized_access",
+        "severity": "high",
+        "details": {
+            "resource": "database",
+            "user": "unknown",
+            "access_method": "SQL injection",
+            "tables_accessed": [
+                "users",
+                "credit_cards"
+            ]
+        },
+        "status": "investigating"
+    },
+    {
+        "id": "event-010",
+        "timestamp": "2025-04-15T09:45:00Z",
+        "source_ip": "192.168.1.109",
+        "event_type": "suspicious_process",
+        "severity": "medium",
+        "details": {
+            "process_name": "svchost.exe",
+            "process_id": 5678,
+            "parent_process": "unknown",
+            "command_line": "svchost.exe -k netsvcs",
+            "unusual_behavior": "connecting to multiple external IPs"
+        },
+        "status": "open"
+    }
+]

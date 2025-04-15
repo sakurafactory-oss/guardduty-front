@@ -1,0 +1,135 @@
+[
+    {
+        "id": "time-series",
+        "title": "セキュリティイベント時系列",
+        "description": "時間経過に伴うセキュリティイベントの発生数",
+        "type": "chart",
+        "chart_type": "line",
+        "data_source": "/api/dashboard/time-series",
+        "query": {
+            "time_range": {
+                "preset": "last_7d"
+            },
+            "group_by": "severity",
+            "interval": "1d"
+        },
+        "options": {
+            "show_legend": true,
+            "stack_series": false,
+            "y_axis_label": "イベント数",
+            "x_axis_label": "日付"
+        },
+        "refresh_interval": 300
+    },
+    {
+        "id": "severity-distribution",
+        "title": "重要度分布",
+        "description": "重要度別のセキュリティイベント分布",
+        "type": "chart",
+        "chart_type": "pie",
+        "data_source": "/api/dashboard/severity-distribution",
+        "query": {
+            "time_range": {
+                "preset": "last_7d"
+            }
+        },
+        "options": {
+            "show_legend": true,
+            "show_labels": true,
+            "show_percentages": true,
+            "donut": false
+        },
+        "refresh_interval": 300
+    },
+    {
+        "id": "event-types",
+        "title": "イベントタイプ分布",
+        "description": "タイプ別のセキュリティイベント分布",
+        "type": "chart",
+        "chart_type": "bar",
+        "data_source": "/api/dashboard/event-types",
+        "query": {
+            "time_range": {
+                "preset": "last_7d"
+            },
+            "limit": 10,
+            "sort_by": "count"
+        },
+        "options": {
+            "show_legend": false,
+            "horizontal": true,
+            "y_axis_label": "イベント数",
+            "x_axis_label": "イベントタイプ"
+        },
+        "refresh_interval": 300
+    },
+    {
+        "id": "geo-distribution",
+        "title": "地理的分布",
+        "description": "国別のセキュリティイベント発生数",
+        "type": "map",
+        "data_source": "/api/dashboard/geo-distribution",
+        "query": {
+            "time_range": {
+                "preset": "last_7d"
+            }
+        },
+        "options": {
+            "map_type": "world",
+            "color_scale": [
+                "#f7fbff",
+                "#08519c"
+            ],
+            "show_legend": true,
+            "zoom_level": 1
+        },
+        "refresh_interval": 300
+    },
+    {
+        "id": "recent-events",
+        "title": "最近のイベント",
+        "description": "最近発生したセキュリティイベント",
+        "type": "table",
+        "data_source": "/api/security-events",
+        "query": {
+            "time_range": {
+                "preset": "last_24h"
+            },
+            "limit": 10,
+            "sort_by": "timestamp",
+            "sort_order": "desc"
+        },
+        "options": {
+            "columns": [
+                {
+                    "field": "timestamp",
+                    "label": "時間",
+                    "format": "datetime"
+                },
+                {
+                    "field": "event_type",
+                    "label": "タイプ"
+                },
+                {
+                    "field": "severity",
+                    "label": "重要度",
+                    "format": "severity"
+                },
+                {
+                    "field": "source_ip",
+                    "label": "送信元IP"
+                },
+                {
+                    "field": "status",
+                    "label": "ステータス",
+                    "format": "status"
+                }
+            ],
+            "row_actions": [
+                "view",
+                "resolve"
+            ]
+        },
+        "refresh_interval": 60
+    }
+]

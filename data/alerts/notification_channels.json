@@ -1,0 +1,247 @@
+{
+    "channels": [
+        {
+            "id": "channel-1",
+            "name": "セキュリティチームSlack",
+            "description": "セキュリティチームのSlackチャンネル",
+            "method": "slack",
+            "config": {
+                "webhook_url": "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX",
+                "channel": "#security-alerts",
+                "username": "GuardDuty Bot",
+                "icon_emoji": ":shield:",
+                "message_template": "【{{severity}}】{{title}}\n{{description}}\n発生時刻: {{timestamp}}\n詳細: {{details}}"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "security",
+                "slack",
+                "critical"
+            ]
+        },
+        {
+            "id": "channel-2",
+            "name": "運用チームメール",
+            "description": "運用チームへのメール通知",
+            "method": "email",
+            "config": {
+                "recipients": [
+                    "ops-team@example.com",
+                    "security-manager@example.com"
+                ],
+                "subject_template": "【GuardDuty】{{severity}} - {{title}}",
+                "body_template": "<h1>{{title}}</h1><p>{{description}}</p><p>発生時刻: {{timestamp}}</p><h2>詳細情報</h2><pre>{{details}}</pre>",
+                "from_address": "guardduty@example.com",
+                "reply_to": "no-reply@example.com",
+                "include_attachments": true
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "operations",
+                "email"
+            ]
+        },
+        {
+            "id": "channel-3",
+            "name": "インシデント管理システム",
+            "description": "インシデント管理システムへのWebhook通知",
+            "method": "webhook",
+            "config": {
+                "url": "https://incident.example.com/api/v1/incidents",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer XXXXXXXXXXXXXXXXXXXXXXXX"
+                },
+                "body_template": "{\"title\": \"{{title}}\", \"description\": \"{{description}}\", \"severity\": \"{{severity}}\", \"source\": \"GuardDuty\", \"timestamp\": \"{{timestamp}}\", \"details\": {{details}}}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "incident",
+                "webhook",
+                "integration"
+            ]
+        },
+        {
+            "id": "channel-4",
+            "name": "オンコール担当者SMS",
+            "description": "オンコール担当者へのSMS通知（重大インシデントのみ）",
+            "method": "sms",
+            "config": {
+                "phone_numbers": [
+                    "+81-90-1234-5678",
+                    "+81-80-8765-4321"
+                ],
+                "message_template": "【GuardDuty】{{severity}} - {{title}} - 詳細はメールを確認してください",
+                "service_provider": "twilio"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "oncall",
+                "sms",
+                "critical"
+            ]
+        },
+        {
+            "id": "channel-5",
+            "name": "モバイルアプリ通知",
+            "description": "GuardDutyモバイルアプリへのプッシュ通知",
+            "method": "push",
+            "config": {
+                "app_ids": [
+                    "com.example.guardduty.mobile"
+                ],
+                "title_template": "【{{severity}}】{{title}}",
+                "body_template": "{{description}}",
+                "icon_url": "https://example.com/icons/guardduty.png",
+                "action_url": "guardduty://alerts/{{id}}",
+                "ttl": 86400
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "mobile",
+                "push"
+            ]
+        },
+        {
+            "id": "channel-6",
+            "name": "Microsoft Teams",
+            "description": "セキュリティチームのMicrosoft Teamsチャンネル",
+            "method": "webhook",
+            "config": {
+                "url": "https://outlook.office.com/webhook/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX@XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/IncomingWebhook/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body_template": "{\"@type\": \"MessageCard\", \"@context\": \"http://schema.org/extensions\", \"themeColor\": \"{{#if (eq severity 'critical')}}FF0000{{else}}{{#if (eq severity 'high')}}FFA500{{else}}{{#if (eq severity 'medium')}}FFFF00{{else}}{{#if (eq severity 'low')}}00FF00{{else}}0000FF{{/if}}{{/if}}{{/if}}{{/if}}\", \"summary\": \"{{title}}\", \"sections\": [{\"activityTitle\": \"【{{severity}}】{{title}}\", \"activitySubtitle\": \"{{timestamp}}\", \"text\": \"{{description}}\", \"facts\": [{\"name\": \"重要度\", \"value\": \"{{severity}}\"}, {\"name\": \"発生時刻\", \"value\": \"{{timestamp}}\"}]}]}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "teams",
+                "webhook",
+                "security"
+            ]
+        },
+        {
+            "id": "channel-7",
+            "name": "PagerDuty",
+            "description": "PagerDutyへのインシデント通知",
+            "method": "webhook",
+            "config": {
+                "url": "https://events.pagerduty.com/v2/enqueue",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body_template": "{\"routing_key\": \"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\", \"event_action\": \"trigger\", \"payload\": {\"summary\": \"{{title}}\", \"severity\": \"{{#if (eq severity 'critical')}}critical{{else}}{{#if (eq severity 'high')}}error{{else}}{{#if (eq severity 'medium')}}warning{{else}}info{{/if}}{{/if}}{{/if}}\", \"source\": \"GuardDuty\", \"timestamp\": \"{{timestamp}}\", \"custom_details\": {{details}}}}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "pagerduty",
+                "webhook",
+                "critical"
+            ]
+        },
+        {
+            "id": "channel-8",
+            "name": "Jira",
+            "description": "Jiraへのチケット作成",
+            "method": "webhook",
+            "config": {
+                "url": "https://example.atlassian.net/rest/api/2/issue",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic XXXXXXXXXXXXXXXXXXXXXXXX"
+                },
+                "body_template": "{\"fields\": {\"project\": {\"key\": \"SEC\"}, \"summary\": \"{{title}}\", \"description\": \"{{description}}\\n\\n発生時刻: {{timestamp}}\\n\\n詳細情報:\\n{{details}}\", \"issuetype\": {\"name\": \"インシデント\"}, \"priority\": {\"name\": \"{{#if (eq severity 'critical')}}Highest{{else}}{{#if (eq severity 'high')}}High{{else}}{{#if (eq severity 'medium')}}Medium{{else}}Low{{/if}}{{/if}}{{/if}}\"}}}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "jira",
+                "webhook",
+                "ticket"
+            ]
+        },
+        {
+            "id": "channel-9",
+            "name": "監査ログ",
+            "description": "監査目的のためのログ記録",
+            "method": "webhook",
+            "config": {
+                "url": "https://audit.example.com/api/v1/logs",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer XXXXXXXXXXXXXXXXXXXXXXXX"
+                },
+                "body_template": "{\"event_type\": \"security_alert\", \"title\": \"{{title}}\", \"description\": \"{{description}}\", \"severity\": \"{{severity}}\", \"timestamp\": \"{{timestamp}}\", \"details\": {{details}}, \"source\": \"GuardDuty\"}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "audit",
+                "webhook",
+                "logging"
+            ]
+        },
+        {
+            "id": "channel-10",
+            "name": "Discord",
+            "description": "セキュリティチームのDiscordチャンネル",
+            "method": "webhook",
+            "config": {
+                "url": "https://discord.com/api/webhooks/XXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+                "method": "POST",
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "body_template": "{\"embeds\": [{\"title\": \"【{{severity}}】{{title}}\", \"description\": \"{{description}}\", \"color\": {{#if (eq severity 'critical')}}16711680{{else}}{{#if (eq severity 'high')}}16744192{{else}}{{#if (eq severity 'medium')}}16776960{{else}}{{#if (eq severity 'low')}}65280{{else}}255{{/if}}{{/if}}{{/if}}{{/if}}, \"fields\": [{\"name\": \"重要度\", \"value\": \"{{severity}}\", \"inline\": true}, {\"name\": \"発生時刻\", \"value\": \"{{timestamp}}\", \"inline\": true}], \"footer\": {\"text\": \"GuardDuty\"}}]}",
+                "timeout": 5000,
+                "retry_count": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "discord",
+                "webhook",
+                "security"
+            ]
+        }
+    ],
+    "pagination": {
+        "total": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}

@@ -1,0 +1,191 @@
+{
+    "id": "security-events-time-series",
+    "title": "セキュリティイベント時系列",
+    "description": "過去7日間のセキュリティイベント発生数",
+    "time_range": {
+        "start": "2025-04-08T00:00:00Z",
+        "end": "2025-04-15T23:59:59Z",
+        "preset": "last_7d"
+    },
+    "interval": "1d",
+    "series": [
+        {
+            "name": "重大",
+            "data": [
+                {
+                    "timestamp": "2025-04-08T00:00:00Z",
+                    "value": 2
+                },
+                {
+                    "timestamp": "2025-04-09T00:00:00Z",
+                    "value": 1
+                },
+                {
+                    "timestamp": "2025-04-10T00:00:00Z",
+                    "value": 0
+                },
+                {
+                    "timestamp": "2025-04-11T00:00:00Z",
+                    "value": 3
+                },
+                {
+                    "timestamp": "2025-04-12T00:00:00Z",
+                    "value": 1
+                },
+                {
+                    "timestamp": "2025-04-13T00:00:00Z",
+                    "value": 2
+                },
+                {
+                    "timestamp": "2025-04-14T00:00:00Z",
+                    "value": 4
+                },
+                {
+                    "timestamp": "2025-04-15T00:00:00Z",
+                    "value": 2
+                }
+            ],
+            "metadata": {
+                "color": "#dc2626",
+                "description": "重大なセキュリティイベント"
+            }
+        },
+        {
+            "name": "高",
+            "data": [
+                {
+                    "timestamp": "2025-04-08T00:00:00Z",
+                    "value": 5
+                },
+                {
+                    "timestamp": "2025-04-09T00:00:00Z",
+                    "value": 3
+                },
+                {
+                    "timestamp": "2025-04-10T00:00:00Z",
+                    "value": 4
+                },
+                {
+                    "timestamp": "2025-04-11T00:00:00Z",
+                    "value": 2
+                },
+                {
+                    "timestamp": "2025-04-12T00:00:00Z",
+                    "value": 6
+                },
+                {
+                    "timestamp": "2025-04-13T00:00:00Z",
+                    "value": 4
+                },
+                {
+                    "timestamp": "2025-04-14T00:00:00Z",
+                    "value": 7
+                },
+                {
+                    "timestamp": "2025-04-15T00:00:00Z",
+                    "value": 5
+                }
+            ],
+            "metadata": {
+                "color": "#f87171",
+                "description": "高重要度のセキュリティイベント"
+            }
+        },
+        {
+            "name": "中",
+            "data": [
+                {
+                    "timestamp": "2025-04-08T00:00:00Z",
+                    "value": 8
+                },
+                {
+                    "timestamp": "2025-04-09T00:00:00Z",
+                    "value": 10
+                },
+                {
+                    "timestamp": "2025-04-10T00:00:00Z",
+                    "value": 7
+                },
+                {
+                    "timestamp": "2025-04-11T00:00:00Z",
+                    "value": 9
+                },
+                {
+                    "timestamp": "2025-04-12T00:00:00Z",
+                    "value": 8
+                },
+                {
+                    "timestamp": "2025-04-13T00:00:00Z",
+                    "value": 11
+                },
+                {
+                    "timestamp": "2025-04-14T00:00:00Z",
+                    "value": 9
+                },
+                {
+                    "timestamp": "2025-04-15T00:00:00Z",
+                    "value": 12
+                }
+            ],
+            "metadata": {
+                "color": "#fbbf24",
+                "description": "中程度のセキュリティイベント"
+            }
+        },
+        {
+            "name": "低",
+            "data": [
+                {
+                    "timestamp": "2025-04-08T00:00:00Z",
+                    "value": 12
+                },
+                {
+                    "timestamp": "2025-04-09T00:00:00Z",
+                    "value": 15
+                },
+                {
+                    "timestamp": "2025-04-10T00:00:00Z",
+                    "value": 10
+                },
+                {
+                    "timestamp": "2025-04-11T00:00:00Z",
+                    "value": 14
+                },
+                {
+                    "timestamp": "2025-04-12T00:00:00Z",
+                    "value": 13
+                },
+                {
+                    "timestamp": "2025-04-13T00:00:00Z",
+                    "value": 16
+                },
+                {
+                    "timestamp": "2025-04-14T00:00:00Z",
+                    "value": 12
+                },
+                {
+                    "timestamp": "2025-04-15T00:00:00Z",
+                    "value": 18
+                }
+            ],
+            "metadata": {
+                "color": "#60a5fa",
+                "description": "低重要度のセキュリティイベント"
+            }
+        }
+    ],
+    "annotations": [
+        {
+            "timestamp": "2025-04-11T10:30:00Z",
+            "title": "システムアップデート",
+            "description": "セキュリティパッチの適用",
+            "type": "info"
+        },
+        {
+            "timestamp": "2025-04-14T15:45:00Z",
+            "title": "ネットワーク異常",
+            "description": "一時的なネットワーク障害が発生",
+            "type": "warning"
+        }
+    ]
+}

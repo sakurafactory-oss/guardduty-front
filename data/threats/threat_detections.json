@@ -1,0 +1,227 @@
+{
+    "detections": [
+        {
+            "id": "td1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "rule_id": "tr1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-15T10:32:00Z",
+            "source_ip": "192.168.1.100",
+            "threat_type": "brute_force",
+            "severity": "high",
+            "details": {
+                "username": "admin",
+                "attempt_count": 5,
+                "time_window": 300
+            },
+            "related_events": [
+                "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                "a2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+                "a3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+                "a4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+                "a5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "rule_id": "tr3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "timestamp": "2025-04-15T10:30:00Z",
+            "source_ip": "203.0.113.42",
+            "threat_type": "malicious_ip",
+            "severity": "high",
+            "details": {
+                "feed_name": "Emerging Threats",
+                "confidence": 90,
+                "category": "scanner"
+            },
+            "related_events": [
+                "f1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+                "f2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+                "f3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "rule_id": "tr4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "timestamp": "2025-04-15T09:45:00Z",
+            "source_ip": "203.0.113.42",
+            "threat_type": "port_scan",
+            "severity": "medium",
+            "details": {
+                "ports": [
+                    22,
+                    80,
+                    443,
+                    3306,
+                    5432
+                ],
+                "scan_duration": 120,
+                "unique_ports": 5
+            },
+            "related_events": [
+                "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "rule_id": "tr5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "timestamp": "2025-04-15T09:45:00Z",
+            "source_ip": "10.0.0.15",
+            "threat_type": "anomaly",
+            "severity": "critical",
+            "details": {
+                "command": "sudo su -",
+                "user": "operator",
+                "target_user": "root"
+            },
+            "related_events": [
+                "a6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i"
+            ],
+            "status": "in_progress",
+            "assigned_to": "user-123",
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "rule_id": "tr6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "timestamp": "2025-04-14T22:10:00Z",
+            "source_ip": "192.0.2.25",
+            "threat_type": "suspicious_connection",
+            "severity": "medium",
+            "details": {
+                "destination_ip": "203.0.113.100",
+                "destination_port": 4444,
+                "protocol": "TCP",
+                "connection_duration": 300
+            },
+            "related_events": [
+                "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "rule_id": "tr7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "timestamp": "2025-04-14T20:45:00Z",
+            "source_ip": "198.51.100.17",
+            "threat_type": "data_exfiltration",
+            "severity": "high",
+            "details": {
+                "destination_ip": "203.0.113.200",
+                "data_size": 25600,
+                "protocol": "HTTPS",
+                "detection_method": "anomaly"
+            },
+            "related_events": [
+                "f1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "rule_id": "tr8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "timestamp": "2025-04-15T07:30:00Z",
+            "source_ip": "198.51.100.73",
+            "threat_type": "malware",
+            "severity": "critical",
+            "details": {
+                "file_name": "suspicious.exe",
+                "file_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+                "malware_type": "trojan",
+                "detection_method": "signature"
+            },
+            "related_events": [
+                "c1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g"
+            ],
+            "status": "in_progress",
+            "assigned_to": "user-456",
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "rule_id": "tr9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "timestamp": "2025-04-14T17:00:00Z",
+            "source_ip": "203.0.113.15",
+            "threat_type": "ddos",
+            "severity": "high",
+            "details": {
+                "target_service": "web_server",
+                "request_rate": 5000,
+                "attack_type": "syn_flood",
+                "duration": 600
+            },
+            "related_events": [
+                "c2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m"
+            ],
+            "status": "open",
+            "assigned_to": null,
+            "resolution": null,
+            "resolution_time": null
+        },
+        {
+            "id": "td9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "rule_id": "tr0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "timestamp": "2025-04-14T19:30:00Z",
+            "source_ip": "10.0.0.25",
+            "threat_type": "anomaly",
+            "severity": "medium",
+            "details": {
+                "file_path": "/etc/nginx/nginx.conf",
+                "user": "devops",
+                "change_type": "modify"
+            },
+            "related_events": [
+                "a2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k"
+            ],
+            "status": "resolved",
+            "assigned_to": "user-789",
+            "resolution": "Authorized change by DevOps team",
+            "resolution_time": "2025-04-14T19:45:00Z"
+        },
+        {
+            "id": "td0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "rule_id": "tr2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "timestamp": "2025-04-14T03:15:00Z",
+            "source_ip": "192.168.1.50",
+            "threat_type": "suspicious_login",
+            "severity": "medium",
+            "details": {
+                "username": "user1",
+                "login_time": "03:15:00",
+                "usual_login_time": "09:00:00 - 18:00:00",
+                "anomaly_score": 0.85
+            },
+            "related_events": [
+                "b2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l"
+            ],
+            "status": "false_positive",
+            "assigned_to": "user-789",
+            "resolution": "Authorized after-hours work",
+            "resolution_time": "2025-04-14T08:30:00Z"
+        }
+    ],
+    "pagination": {
+        "total": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}

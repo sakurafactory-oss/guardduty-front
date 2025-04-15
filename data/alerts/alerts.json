@@ -1,0 +1,296 @@
+{
+    "alerts": [
+        {
+            "id": "al1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-15T10:32:00Z",
+            "severity": "high",
+            "title": "ブルートフォース攻撃を検出",
+            "description": "IPアドレス192.168.1.100からのブルートフォース攻撃を検出しました",
+            "source_event_id": "td1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "details": {
+                "source_ip": "192.168.1.100",
+                "username": "admin",
+                "attempt_count": 5
+            },
+            "status": "sent",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T10:32:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T10:32:02Z"
+                }
+            ]
+        },
+        {
+            "id": "al2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-15T10:30:00Z",
+            "severity": "high",
+            "title": "悪意のあるIPからのアクセスを検出",
+            "description": "既知の悪意あるIPアドレス203.0.113.42からのアクセスを検出しました",
+            "source_event_id": "td2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "details": {
+                "source_ip": "203.0.113.42",
+                "feed_name": "Emerging Threats",
+                "confidence": 90,
+                "category": "scanner"
+            },
+            "status": "acknowledged",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T10:30:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T10:30:02Z"
+                }
+            ],
+            "acknowledged_by": "user-123",
+            "acknowledged_at": "2025-04-15T10:35:00Z"
+        },
+        {
+            "id": "al3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "rule_id": "ar2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "timestamp": "2025-04-15T09:45:00Z",
+            "severity": "medium",
+            "title": "ポートスキャンを検出",
+            "description": "IPアドレス203.0.113.42からのポートスキャンを検出しました",
+            "source_event_id": "td3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "details": {
+                "source_ip": "203.0.113.42",
+                "ports": [
+                    22,
+                    80,
+                    443,
+                    3306,
+                    5432
+                ],
+                "scan_duration": 120
+            },
+            "status": "sent",
+            "notification_status": [
+                {
+                    "channel_id": "channel-3",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T09:45:01Z"
+                }
+            ]
+        },
+        {
+            "id": "al4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-15T09:45:00Z",
+            "severity": "critical",
+            "title": "特権昇格を検出",
+            "description": "ユーザーoperatorによる特権昇格を検出しました",
+            "source_event_id": "td4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "details": {
+                "source_ip": "10.0.0.15",
+                "command": "sudo su -",
+                "user": "operator",
+                "target_user": "root"
+            },
+            "status": "resolved",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T09:45:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T09:45:02Z"
+                }
+            ],
+            "acknowledged_by": "user-123",
+            "acknowledged_at": "2025-04-15T09:50:00Z",
+            "resolved_by": "user-123",
+            "resolved_at": "2025-04-15T10:00:00Z",
+            "resolution_note": "承認済みの運用作業"
+        },
+        {
+            "id": "al5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "rule_id": "ar2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "timestamp": "2025-04-14T22:10:00Z",
+            "severity": "medium",
+            "title": "不審な接続を検出",
+            "description": "IPアドレス192.0.2.25から不審なポート4444への接続を検出しました",
+            "source_event_id": "td5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "details": {
+                "source_ip": "192.0.2.25",
+                "destination_ip": "203.0.113.100",
+                "destination_port": 4444,
+                "protocol": "TCP",
+                "connection_duration": 300
+            },
+            "status": "sent",
+            "notification_status": [
+                {
+                    "channel_id": "channel-3",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T22:10:01Z"
+                }
+            ]
+        },
+        {
+            "id": "al6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-14T20:45:00Z",
+            "severity": "high",
+            "title": "データ流出を検出",
+            "description": "IPアドレス198.51.100.17からの異常なデータ転送を検出しました",
+            "source_event_id": "td6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "details": {
+                "source_ip": "198.51.100.17",
+                "destination_ip": "203.0.113.200",
+                "data_size": 25600,
+                "protocol": "HTTPS"
+            },
+            "status": "acknowledged",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T20:45:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T20:45:02Z"
+                }
+            ],
+            "acknowledged_by": "user-456",
+            "acknowledged_at": "2025-04-14T21:00:00Z"
+        },
+        {
+            "id": "al7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-15T07:30:00Z",
+            "severity": "critical",
+            "title": "マルウェアを検出",
+            "description": "IPアドレス198.51.100.73からのマルウェアを検出しました",
+            "source_event_id": "td7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "details": {
+                "source_ip": "198.51.100.73",
+                "file_name": "suspicious.exe",
+                "file_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+                "malware_type": "trojan"
+            },
+            "status": "acknowledged",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T07:30:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-15T07:30:02Z"
+                }
+            ],
+            "acknowledged_by": "user-456",
+            "acknowledged_at": "2025-04-15T07:45:00Z"
+        },
+        {
+            "id": "al8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "rule_id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "timestamp": "2025-04-14T17:00:00Z",
+            "severity": "high",
+            "title": "DDoS攻撃を検出",
+            "description": "IPアドレス203.0.113.15からのDDoS攻撃を検出しました",
+            "source_event_id": "td8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "details": {
+                "source_ip": "203.0.113.15",
+                "target_service": "web_server",
+                "request_rate": 5000,
+                "attack_type": "syn_flood"
+            },
+            "status": "sent",
+            "notification_status": [
+                {
+                    "channel_id": "channel-1",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T17:00:01Z"
+                },
+                {
+                    "channel_id": "channel-2",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T17:00:02Z"
+                }
+            ]
+        },
+        {
+            "id": "al9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "rule_id": "ar2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "timestamp": "2025-04-14T19:30:00Z",
+            "severity": "medium",
+            "title": "設定変更を検出",
+            "description": "ユーザーdevopsによる設定ファイルの変更を検出しました",
+            "source_event_id": "td9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "details": {
+                "source_ip": "10.0.0.25",
+                "file_path": "/etc/nginx/nginx.conf",
+                "user": "devops",
+                "change_type": "modify"
+            },
+            "status": "resolved",
+            "notification_status": [
+                {
+                    "channel_id": "channel-3",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T19:30:01Z"
+                }
+            ],
+            "acknowledged_by": "user-789",
+            "acknowledged_at": "2025-04-14T19:35:00Z",
+            "resolved_by": "user-789",
+            "resolved_at": "2025-04-14T19:45:00Z",
+            "resolution_note": "承認済みの設定変更"
+        },
+        {
+            "id": "al0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "rule_id": "ar2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "timestamp": "2025-04-14T03:15:00Z",
+            "severity": "medium",
+            "title": "不審なログインを検出",
+            "description": "通常とは異なる時間帯からのログインを検出しました",
+            "source_event_id": "td0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "details": {
+                "source_ip": "192.168.1.50",
+                "username": "user1",
+                "login_time": "03:15:00",
+                "usual_login_time": "09:00:00 - 18:00:00"
+            },
+            "status": "resolved",
+            "notification_status": [
+                {
+                    "channel_id": "channel-3",
+                    "status": "delivered",
+                    "timestamp": "2025-04-14T03:15:01Z"
+                }
+            ],
+            "acknowledged_by": "user-789",
+            "acknowledged_at": "2025-04-14T08:00:00Z",
+            "resolved_by": "user-789",
+            "resolved_at": "2025-04-14T08:30:00Z",
+            "resolution_note": "承認済みの時間外作業"
+        }
+    ],
+    "pagination": {
+        "total": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}

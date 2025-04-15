@@ -1,0 +1,271 @@
+{
+    "rules": [
+        {
+            "id": "ar1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "name": "重要度の高い脅威検出アラート",
+            "description": "重要度が高い脅威が検出された場合にアラートを発生",
+            "condition": {
+                "type": "threat_detection",
+                "severity": [
+                    "critical",
+                    "high"
+                ],
+                "threat_types": [
+                    "brute_force",
+                    "malicious_ip",
+                    "malware",
+                    "data_exfiltration",
+                    "ddos"
+                ]
+            },
+            "notification_channels": [
+                "channel-1",
+                "channel-2"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_hour": 5
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "name": "中程度の脅威検出アラート",
+            "description": "中程度の脅威が検出された場合にアラートを発生",
+            "condition": {
+                "type": "threat_detection",
+                "severity": [
+                    "medium"
+                ],
+                "threat_types": [
+                    "suspicious_login",
+                    "port_scan",
+                    "suspicious_connection",
+                    "anomaly"
+                ]
+            },
+            "notification_channels": [
+                "channel-3"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_hour": 10
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "name": "認証失敗アラート",
+            "description": "認証失敗が発生した場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "auth_log",
+                "pattern": {
+                    "success": false,
+                    "service": "ssh"
+                },
+                "threshold": 3,
+                "time_window": 300
+            },
+            "notification_channels": [
+                "channel-1"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_hour": 5
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "name": "システムリソース使用率アラート",
+            "description": "システムリソース使用率が閾値を超えた場合にアラートを発生",
+            "condition": {
+                "type": "metric_threshold",
+                "metric": "cpu_usage",
+                "operator": ">",
+                "value": 90,
+                "duration": 300
+            },
+            "notification_channels": [
+                "channel-2",
+                "channel-3"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_day": 10,
+                "cooldown_period": 3600
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "name": "Webサーバーエラーアラート",
+            "description": "Webサーバーで5xxエラーが多発した場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "web_server_log",
+                "pattern": {
+                    "status_code": {
+                        "operator": ">=",
+                        "value": 500
+                    }
+                },
+                "threshold": 10,
+                "time_window": 300
+            },
+            "notification_channels": [
+                "channel-2"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_hour": 3
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "name": "ファイアウォールブロックアラート",
+            "description": "ファイアウォールで多数のブロックが発生した場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "firewall_log",
+                "pattern": {
+                    "action": "BLOCK"
+                },
+                "threshold": 100,
+                "time_window": 300
+            },
+            "notification_channels": [
+                "channel-1"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_hour": 2
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "name": "設定ファイル変更アラート",
+            "description": "重要な設定ファイルが変更された場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "system_log",
+                "pattern": {
+                    "message": {
+                        "operator": "contains",
+                        "value": "configuration file changed"
+                    }
+                }
+            },
+            "notification_channels": [
+                "channel-2",
+                "channel-3"
+            ],
+            "throttling": {
+                "enabled": false
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "name": "異常なネットワークトラフィックアラート",
+            "description": "通常より大幅に多いネットワークトラフィックを検出した場合にアラートを発生",
+            "condition": {
+                "type": "anomaly",
+                "metric": "network_traffic",
+                "baseline_period": 7,
+                "threshold": 2.0
+            },
+            "notification_channels": [
+                "channel-1",
+                "channel-2"
+            ],
+            "throttling": {
+                "enabled": true,
+                "max_alerts_per_day": 5
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "name": "バックアップ失敗アラート",
+            "description": "バックアップジョブが失敗した場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "system_log",
+                "pattern": {
+                    "process_name": "cron",
+                    "message": {
+                        "operator": "contains",
+                        "value": "backup"
+                    },
+                    "additional_info.exit_code": {
+                        "operator": "!=",
+                        "value": 0
+                    }
+                }
+            },
+            "notification_channels": [
+                "channel-3"
+            ],
+            "throttling": {
+                "enabled": false
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        },
+        {
+            "id": "ar0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "name": "サービス停止アラート",
+            "description": "重要なサービスが停止した場合にアラートを発生",
+            "condition": {
+                "type": "log_pattern",
+                "log_type": "system_log",
+                "pattern": {
+                    "facility": "daemon",
+                    "severity": "error",
+                    "message": {
+                        "operator": "contains",
+                        "value": "failed to start"
+                    }
+                }
+            },
+            "notification_channels": [
+                "channel-1",
+                "channel-2",
+                "channel-3"
+            ],
+            "throttling": {
+                "enabled": false
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z"
+        }
+    ],
+    "pagination": {
+        "total": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}

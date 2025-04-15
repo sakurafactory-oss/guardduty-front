@@ -3,12 +3,25 @@ import Home from '../index'
 import '@testing-library/jest-dom'
 
 // モックの設定
-jest.mock('axios', () => ({
-  get: jest.fn(() => Promise.resolve({ data: [] })),
-  post: jest.fn(() => Promise.resolve({})),
-  put: jest.fn(() => Promise.resolve({})),
-  delete: jest.fn(() => Promise.resolve({})),
+jest.mock('../../hooks/useApi', () => ({
+  useGetApi: jest.fn().mockReturnValue({
+    data: null,
+    loading: true,
+    error: null,
+    execute: jest.fn()
+  })
 }))
+
+// Next.jsのLinkコンポーネントをモック
+jest.mock('next/link', () => {
+  return ({ children, className, href }: { children: React.ReactNode, className?: string, href: string }) => {
+    return (
+      <a href={href} className={className} data-testid="mock-link">
+        {children}
+      </a>
+    );
+  };
+});
 
 describe('Home', () => {
   it('renders the header', () => {
@@ -21,35 +34,92 @@ describe('Home', () => {
     expect(heading).toBeInTheDocument()
   })
   
-  it('renders the event form', () => {
+  it('renders navigation links', () => {
     render(<Home />)
     
-    const formHeading = screen.getByRole('heading', {
-      name: /新規セキュリティイベント/i,
-    })
+    // data-testidを使用してリンクを検索
+    const links = screen.getAllByTestId('mock-link')
+    const dashboardLink = links.find(link => link.textContent?.includes('ダッシュボード'))
+    const eventsLink = links.find(link => link.textContent?.includes('イベント一覧'))
     
-    const sourceIpInput = screen.getByLabelText(/送信元IP/i)
-    const eventTypeInput = screen.getByLabelText(/イベントタイプ/i)
-    const severityInput = screen.getByLabelText(/重要度/i)
-    const detailsInput = screen.getByLabelText(/詳細/i)
-    const submitButton = screen.getByRole('button', { name: /イベントを作成/i })
-    
-    expect(formHeading).toBeInTheDocument()
-    expect(sourceIpInput).toBeInTheDocument()
-    expect(eventTypeInput).toBeInTheDocument()
-    expect(severityInput).toBeInTheDocument()
-    expect(detailsInput).toBeInTheDocument()
-    expect(submitButton).toBeInTheDocument()
+    expect(dashboardLink).toBeInTheDocument()
+    expect(eventsLink).toBeInTheDocument()
   })
   
-  it('renders the event list section', () => {
+  it('renders the dashboard section', () => {
     render(<Home />)
     
-    const listHeading = screen.getByRole('heading', {
-      name: /セキュリティイベント一覧/i,
+    const dashboardHeading = screen.getByRole('heading', {
+      name: /セキュリティ監視ダッシュボード/i,
     })
     
-    expect(listHeading).toBeInTheDocument()
-    expect(screen.getByText(/読み込み中/i)).toBeInTheDocument()
+    expect(dashboardHeading).toBeInTheDocument()
+    expect(screen.getByText(/さくらセキュリティガードへようこそ/i)).toBeInTheDocument()
+  })
+  
+  it('renders the main feature card', () => {
+    render(<Home />)
+    
+    const featuresHeading = screen.getByRole('heading', {
+      name: /主要機能/i,
+    })
+    
+    expect(featuresHeading).toBeInTheDocument()
+    expect(screen.getByText(/セキュリティイベント監視/i)).toBeInTheDocument()
+    expect(screen.getByText(/リアルタイムアラート/i)).toBeInTheDocument()
+    expect(screen.getByText(/脅威インテリジェンス/i)).toBeInTheDocument()
+    expect(screen.getByText(/セキュリティレポート/i)).toBeInTheDocument()
+  })
+  
+  it('renders the statistics card', () => {
+    render(<Home />)
+    
+    const statsHeading = screen.getByRole('heading', {
+      name: /イベント統計/i,
+    })
+    
+    expect(statsHeading).toBeInTheDocument()
+    
+    // テキストノードを直接検索するのではなく、要素を検索
+    const severityLabels = screen.getAllByText(/重大|高|中|低/i)
+    expect(severityLabels.length).toBeGreaterThanOrEqual(4)
+    
+    // 各重要度ラベルが存在することを確認
+    expect(severityLabels.some(label => label.textContent === '重大')).toBeTruthy()
+    expect(severityLabels.some(label => label.textContent === '高')).toBeTruthy()
+    expect(severityLabels.some(label => label.textContent === '中')).toBeTruthy()
+    expect(severityLabels.some(label => label.textContent === '低')).toBeTruthy()
+  })
+  
+  it('renders the quick access card', () => {
+    render(<Home />)
+    
+    const quickAccessHeading = screen.getByRole('heading', {
+      name: /クイックアクセス/i,
+    })
+    
+    expect(quickAccessHeading).toBeInTheDocument()
+    
+    // クイックアクセスリンクの確認
+    const quickLinks = screen.getAllByTestId('mock-link')
+    const linkTexts = quickLinks.map(link => link.textContent)
+    
+    expect(linkTexts.some(text => text?.includes('イベント一覧'))).toBeTruthy()
+    expect(linkTexts.some(text => text?.includes('ダッシュボード'))).toBeTruthy()
+    expect(linkTexts.some(text => text?.includes('アラート'))).toBeTruthy()
+    expect(linkTexts.some(text => text?.includes('設定'))).toBeTruthy()
+  })
+  
+  it('renders the latest events section', () => {
+    render(<Home />)
+    
+    const latestEventsHeading = screen.getByRole('heading', {
+      name: /最新のセキュリティイベント/i,
+    })
+    
+    expect(latestEventsHeading).toBeInTheDocument()
+    
+    // ローディング中の表示
+    expect(screen.getByRole('status')).toBeInTheDocument()
   })
 })

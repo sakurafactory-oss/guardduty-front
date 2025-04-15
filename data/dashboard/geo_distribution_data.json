@@ -1,0 +1,190 @@
+{
+    "id": "security-events-geo",
+    "title": "セキュリティイベント地理的分布",
+    "description": "国別のセキュリティイベント発生数",
+    "time_range": {
+        "start": "2025-04-08T00:00:00Z",
+        "end": "2025-04-15T23:59:59Z",
+        "preset": "last_7d"
+    },
+    "regions": [
+        {
+            "country_code": "JP",
+            "country_name": "日本",
+            "count": 120,
+            "percentage": 40.0,
+            "details": [
+                {
+                    "region": "東京",
+                    "count": 75
+                },
+                {
+                    "region": "大阪",
+                    "count": 25
+                },
+                {
+                    "region": "その他",
+                    "count": 20
+                }
+            ]
+        },
+        {
+            "country_code": "US",
+            "country_name": "米国",
+            "count": 45,
+            "percentage": 15.0,
+            "details": [
+                {
+                    "region": "カリフォルニア",
+                    "count": 20
+                },
+                {
+                    "region": "テキサス",
+                    "count": 15
+                },
+                {
+                    "region": "その他",
+                    "count": 10
+                }
+            ]
+        },
+        {
+            "country_code": "CN",
+            "country_name": "中国",
+            "count": 30,
+            "percentage": 10.0,
+            "details": [
+                {
+                    "region": "北京",
+                    "count": 15
+                },
+                {
+                    "region": "上海",
+                    "count": 10
+                },
+                {
+                    "region": "その他",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "country_code": "RU",
+            "country_name": "ロシア",
+            "count": 25,
+            "percentage": 8.3,
+            "details": [
+                {
+                    "region": "モスクワ",
+                    "count": 15
+                },
+                {
+                    "region": "その他",
+                    "count": 10
+                }
+            ]
+        },
+        {
+            "country_code": "DE",
+            "country_name": "ドイツ",
+            "count": 15,
+            "percentage": 5.0,
+            "details": [
+                {
+                    "region": "ベルリン",
+                    "count": 8
+                },
+                {
+                    "region": "その他",
+                    "count": 7
+                }
+            ]
+        },
+        {
+            "country_code": "GB",
+            "country_name": "イギリス",
+            "count": 12,
+            "percentage": 4.0,
+            "details": [
+                {
+                    "region": "ロンドン",
+                    "count": 7
+                },
+                {
+                    "region": "その他",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "country_code": "FR",
+            "country_name": "フランス",
+            "count": 10,
+            "percentage": 3.3,
+            "details": [
+                {
+                    "region": "パリ",
+                    "count": 6
+                },
+                {
+                    "region": "その他",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "country_code": "KR",
+            "country_name": "韓国",
+            "count": 8,
+            "percentage": 2.7,
+            "details": [
+                {
+                    "region": "ソウル",
+                    "count": 5
+                },
+                {
+                    "region": "その他",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "country_code": "IN",
+            "country_name": "インド",
+            "count": 7,
+            "percentage": 2.3,
+            "details": [
+                {
+                    "region": "ムンバイ",
+                    "count": 4
+                },
+                {
+                    "region": "その他",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "country_code": "BR",
+            "country_name": "ブラジル",
+            "count": 6,
+            "percentage": 2.0,
+            "details": [
+                {
+                    "region": "サンパウロ",
+                    "count": 4
+                },
+                {
+                    "region": "その他",
+                    "count": 2
+                }
+            ]
+        },
+        {
+            "country_code": "OTHER",
+            "country_name": "その他",
+            "count": 22,
+            "percentage": 7.4
+        }
+    ]
+}

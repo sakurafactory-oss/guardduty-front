@@ -1,0 +1,226 @@
+{
+    "rules": [
+        {
+            "id": "tr1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+            "name": "ブルートフォース検出ルール",
+            "description": "ログイン試行の失敗回数が閾値を超えた場合に検出",
+            "threat_type": "brute_force",
+            "severity": "high",
+            "detection_logic": {
+                "type": "threshold",
+                "field": "attempt_count",
+                "operator": ">",
+                "value": 5,
+                "time_window": 300
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "authentication",
+                "login"
+            ]
+        },
+        {
+            "id": "tr2b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e",
+            "name": "不審なログイン検出ルール",
+            "description": "通常とは異なる時間帯や場所からのログインを検出",
+            "threat_type": "suspicious_login",
+            "severity": "medium",
+            "detection_logic": {
+                "type": "anomaly",
+                "baseline_period": 30,
+                "features": [
+                    "login_time",
+                    "source_ip_geo"
+                ],
+                "threshold": 0.8
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "authentication",
+                "anomaly"
+            ]
+        },
+        {
+            "id": "tr3b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6f",
+            "name": "悪意のあるIPからのアクセス検出ルール",
+            "description": "既知の悪意あるIPアドレスからのアクセスを検出",
+            "threat_type": "malicious_ip",
+            "severity": "high",
+            "detection_logic": {
+                "type": "pattern",
+                "field": "source_ip",
+                "pattern_type": "ip_list",
+                "pattern_source": "threat_intelligence_feed",
+                "feed_id": "feed-123"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "network",
+                "threat_intelligence"
+            ]
+        },
+        {
+            "id": "tr4b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6g",
+            "name": "ポートスキャン検出ルール",
+            "description": "短時間に多数のポートへのアクセス試行を検出",
+            "threat_type": "port_scan",
+            "severity": "medium",
+            "detection_logic": {
+                "type": "threshold",
+                "field": "unique_ports",
+                "operator": ">",
+                "value": 10,
+                "time_window": 60
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "network",
+                "reconnaissance"
+            ]
+        },
+        {
+            "id": "tr5b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6h",
+            "name": "特権昇格検出ルール",
+            "description": "通常とは異なるユーザーによる特権昇格を検出",
+            "threat_type": "anomaly",
+            "severity": "critical",
+            "detection_logic": {
+                "type": "pattern",
+                "field": "command",
+                "pattern_type": "regex",
+                "pattern": "sudo\\s+(su|bash|sh)\\s+-.*"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "privilege_escalation",
+                "system"
+            ]
+        },
+        {
+            "id": "tr6b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6i",
+            "name": "不審な接続検出ルール",
+            "description": "既知の不審なポートへの接続を検出",
+            "threat_type": "suspicious_connection",
+            "severity": "medium",
+            "detection_logic": {
+                "type": "pattern",
+                "field": "destination_port",
+                "pattern_type": "list",
+                "pattern": [
+                    4444,
+                    5555,
+                    6666,
+                    7777,
+                    8888,
+                    9999
+                ]
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "network",
+                "backdoor"
+            ]
+        },
+        {
+            "id": "tr7b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6j",
+            "name": "データ流出検出ルール",
+            "description": "通常より大量のデータ転送を検出",
+            "threat_type": "data_exfiltration",
+            "severity": "high",
+            "detection_logic": {
+                "type": "threshold",
+                "field": "data_size",
+                "operator": ">",
+                "value": 10000000,
+                "time_window": 3600
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "data_leak",
+                "network"
+            ]
+        },
+        {
+            "id": "tr8b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6k",
+            "name": "マルウェア検出ルール",
+            "description": "既知のマルウェアシグネチャを検出",
+            "threat_type": "malware",
+            "severity": "critical",
+            "detection_logic": {
+                "type": "pattern",
+                "field": "file_hash",
+                "pattern_type": "hash_list",
+                "pattern_source": "threat_intelligence_feed",
+                "feed_id": "feed-456"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "malware",
+                "file"
+            ]
+        },
+        {
+            "id": "tr9b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6l",
+            "name": "DDoS攻撃検出ルール",
+            "description": "短時間に大量のリクエストを検出",
+            "threat_type": "ddos",
+            "severity": "high",
+            "detection_logic": {
+                "type": "threshold",
+                "field": "request_count",
+                "operator": ">",
+                "value": 1000,
+                "time_window": 60
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "network",
+                "availability"
+            ]
+        },
+        {
+            "id": "tr0b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6m",
+            "name": "設定変更検出ルール",
+            "description": "重要な設定ファイルの変更を検出",
+            "threat_type": "anomaly",
+            "severity": "medium",
+            "detection_logic": {
+                "type": "pattern",
+                "field": "file_path",
+                "pattern_type": "regex",
+                "pattern": "^/etc/(passwd|shadow|sudoers|ssh/sshd_config|nginx/nginx\\.conf)$"
+            },
+            "enabled": true,
+            "created_at": "2025-04-01T00:00:00Z",
+            "updated_at": "2025-04-01T00:00:00Z",
+            "tags": [
+                "configuration",
+                "system"
+            ]
+        }
+    ],
+    "pagination": {
+        "total": 10,
+        "page": 1,
+        "per_page": 10,
+        "total_pages": 1
+    }
+}
