@@ -12,6 +12,7 @@ export class MockApiService implements ApiService {
      * @param options リクエストオプション
      * @returns APIレスポンス
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async get<T>(url: string, params?: ApiRequestParams, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
         // エラーパスのテスト
         if (url.includes('/error')) {
@@ -33,6 +34,7 @@ export class MockApiService implements ApiService {
      * @param options リクエストオプション
      * @returns APIレスポンス
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async post<T>(url: string, data?: any, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
         // エラーパスのテスト
         if (url.includes('/error')) {
@@ -54,6 +56,7 @@ export class MockApiService implements ApiService {
      * @param options リクエストオプション
      * @returns APIレスポンス
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async put<T>(url: string, data?: any, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
         // エラーパスのテスト
         if (url.includes('/error')) {
@@ -75,6 +78,7 @@ export class MockApiService implements ApiService {
      * @param options リクエストオプション
      * @returns APIレスポンス
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async delete<T>(url: string, params?: ApiRequestParams, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
         // エラーパスのテスト
         if (url.includes('/error')) {
@@ -96,6 +100,7 @@ export class MockApiService implements ApiService {
      * @param options リクエストオプション
      * @returns APIレスポンス
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async patch<T>(url: string, data?: any, options?: ApiRequestOptions): Promise<ApiResponse<T>> {
         // エラーパスのテスト
         if (url.includes('/error')) {
@@ -151,7 +156,7 @@ export class MockApiService implements ApiService {
      */
     private createMockData<T>(url: string, params?: ApiRequestParams, data?: any): T {
         // URLからIDを抽出
-        const idMatch = url.match(/\/([^\/]+)$/);
+        const idMatch = url.match(/\/([^/]+)$/);
         const id = idMatch ? idMatch[1] : 'mock-id';
 
         // データタイプに基づいてモックデータを作成

@@ -35,6 +35,7 @@ export interface UseGetApiOptions<T> {
 /**
  * POST/PUT/PATCH APIフックのオプション
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface UseMutationApiOptions<T, D> {
     url: string;
     options?: ApiRequestOptions;
