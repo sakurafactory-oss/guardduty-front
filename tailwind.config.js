@@ -47,5 +47,11 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/postcss'),
+    require('@tailwindcss/forms'),
+  ],
+  corePlugins: {
+    preflight: true,
+  },
 }
