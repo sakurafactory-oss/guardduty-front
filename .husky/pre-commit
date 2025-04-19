@@ -1,8 +1,15 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "🚀 コミット前にチェックを実行中..."
+yarn build || (echo "❌ ビルドに失敗しました。コミットを中止します。" && exit 1)
+
 echo "🧪 テストを実行中..."
 yarn test || (echo "❌ テストが失敗しました。コミットを中止します。" && exit 1)
+
+
+echo "🔍 リントを自動修正中..."
+yarn lint:fix || (echo "❌ リントの自動修正に失敗しました。コミットを中止します。" && exit 1)
 
 echo "🔍 リントを実行中..."
 yarn lint || (echo "❌ リントが失敗しました。コミットを中止します。" && exit 1)

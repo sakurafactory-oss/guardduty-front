@@ -1,20 +1,57 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { Line, Bar, Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 import { useGetApi } from '../hooks/useApi';
 import { SecurityEvent } from '../types/SecurityEvent';
+import { DashboardLayout, DashboardWidget, TimeSeriesData, GeoDistribution } from '../types/DashboardTypes';
+
+// Chart.jsの登録
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 /**
- * さくらセキュリティガードのトップページ
+ * セキュリティダッシュボード（ホームページ）
  */
-const Home: NextPage = () => {
+const Dashboard: NextPage = () => {
+  // 時間範囲の状態
+  const [timeRange, setTimeRange] = useState<'24h' | '7d' | '30d'>('7d');
+  const [selectedLayout, setSelectedLayout] = useState<string>('default');
+
   // 最新のセキュリティイベント
   const { data: eventsData, loading: eventsLoading } = useGetApi<{ data: SecurityEvent[], pagination: any }>({
     url: '/api/security-events',
     params: { page: 1, per_page: 5 },
     autoExecute: true,
   });
+
+  // ダッシュボードデータ
+  const layoutsApi = useGetApi<{ data: DashboardLayout[] }>({ url: '/api/dashboard/layouts' });
+  const widgetsApi = useGetApi<{ data: DashboardWidget[] }>({ url: '/api/dashboard/widgets' });
+  const timeSeriesApi = useGetApi<{ data: TimeSeriesData }>({ url: '/api/dashboard/time-series' });
+  const geoDistributionApi = useGetApi<{ data: GeoDistribution }>({ url: '/api/dashboard/geo-distribution' });
 
   // 重要度別のイベント数
   const [severityCounts, setSeverityCounts] = useState({
@@ -27,6 +64,20 @@ const Home: NextPage = () => {
 
   // 未解決のイベント数
   const [openCount, setOpenCount] = useState(0);
+
+  // レイアウトとウィジェットの取得
+  useEffect(() => {
+    layoutsApi.execute();
+    widgetsApi.execute();
+  }, []);
+
+  // 時系列データとジオデータの取得
+  useEffect(() => {
+    if (widgetsApi.data) {
+      timeSeriesApi.execute();
+      geoDistributionApi.execute();
+    }
+  }, [widgetsApi.data, timeRange]);
 
   useEffect(() => {
     if (eventsData?.data) {
@@ -59,29 +110,125 @@ const Home: NextPage = () => {
     }
   }, [eventsData?.data]);
 
+  // 時間範囲の変更ハンドラ
+  const handleTimeRangeChange = (range: '24h' | '7d' | '30d') => {
+    setTimeRange(range);
+  };
+
+  // 時系列データのチャート設定
+  const getTimeSeriesChartData = () => {
+    if (!timeSeriesApi.data) return null;
+
+    const data = timeSeriesApi.data?.data;
+    const labels = data?.series?.[0]?.data?.map(item => {
+      const date = new Date(item.timestamp);
+      return date.toLocaleDateString('ja-JP', { month: 'short', day: 'numeric' });
+    });
+
+    if (!labels) return null;
+
+    return {
+      labels,
+      datasets: data?.series?.map(series => ({
+        label: series.name,
+        data: series.data.map(item => item.value),
+        borderColor: series.metadata?.color || '#3b82f6',
+        backgroundColor: `${series.metadata?.color}33` || 'rgba(59, 130, 246, 0.2)',
+        tension: 0.1,
+      })),
+    };
+  };
+
+  // 重要度分布のチャート設定
+  const getSeverityChartData = () => {
+    if (!timeSeriesApi.data) return null;
+
+    const data = timeSeriesApi.data?.data;
+    if (!data?.series) return null;
+    
+    const severityData = data.series.map(series => {
+      return {
+        name: series.name,
+        value: series.data.reduce((sum, item) => sum + item.value, 0),
+        color: series.metadata?.color,
+      };
+    });
+
+    return {
+      labels: severityData.map(item => item.name),
+      datasets: [
+        {
+          data: severityData.map(item => item.value),
+          backgroundColor: severityData.map(item => item.color),
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+
+  // イベントタイプ分布のチャート設定
+  const getEventTypeChartData = () => {
+    // サンプルデータ（実際にはAPIから取得）
+    return {
+      labels: ['不正アクセス', 'マルウェア', 'フィッシング', 'DoS攻撃', 'データ漏洩'],
+      datasets: [
+        {
+          label: 'イベント数',
+          data: [65, 42, 30, 25, 18],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <Head>
-        <title>さくらセキュリティガード</title>
-        <meta name="description" content="さくらインターネット向けのセキュリティ監視サービス" />
+        <title>セキュリティダッシュボード | さくらGuardDuty</title>
+        <meta name="description" content="セキュリティイベントの概要を視覚的に表示するダッシュボード" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900">さくらセキュリティガード</h1>
-          <div className="flex space-x-4">
-            <Link href="/dashboard" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-              ダッシュボード
-            </Link>
-            <Link href="/security-events" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
-              イベント一覧
-            </Link>
-          </div>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">セキュリティダッシュボード</h1>
+        
+        <div className="flex space-x-2">
+          <span className="text-gray-700 mr-2">期間:</span>
+          <button
+            className={`px-3 py-1 rounded text-sm ${
+              timeRange === '24h' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+            onClick={() => handleTimeRangeChange('24h')}
+          >
+            24時間
+          </button>
+          <button
+            className={`px-3 py-1 rounded text-sm ${
+              timeRange === '7d' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+            onClick={() => handleTimeRangeChange('7d')}
+          >
+            7日間
+          </button>
+          <button
+            className={`px-3 py-1 rounded text-sm ${
+              timeRange === '30d' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'
+            }`}
+            onClick={() => handleTimeRangeChange('30d')}
+          >
+            30日間
+          </button>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <div>
         {/* メインカード */}
         <div className="bg-white shadow rounded-lg overflow-hidden mb-8">
           <div className="p-6">
@@ -120,14 +267,7 @@ const Home: NextPage = () => {
                     セキュリティレポート
                   </li>
                 </ul>
-                <div className="mt-6">
-                  <Link href="/dashboard" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-white hover:bg-gray-100">
-                    ダッシュボードを表示
-                    <svg className="ml-2 -mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </Link>
-                </div>
+                {/* ダッシュボードへのリンクは不要（既にダッシュボードページにいるため） */}
               </div>
 
               {/* 統計カード */}
@@ -191,12 +331,7 @@ const Home: NextPage = () => {
                     </svg>
                     <span className="text-sm font-medium text-gray-900">イベント一覧</span>
                   </Link>
-                  <Link href="/dashboard" className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
-                    <svg className="h-8 w-8 text-indigo-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                    <span className="text-sm font-medium text-gray-900">ダッシュボード</span>
-                  </Link>
+                  {/* ダッシュボードへのリンクは不要（既にダッシュボードページにいるため） */}
                   <Link href="/alerts" className="flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
                     <svg className="h-8 w-8 text-indigo-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -302,10 +437,100 @@ const Home: NextPage = () => {
               </Link>
             </div>
           </div>
+    
+          {/* ダッシュボードチャート */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+            {/* 時系列チャート */}
+            <div className="lg:col-span-12 bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-4">セキュリティイベント時系列</h2>
+              <div className="h-64">
+                {timeSeriesApi.loading ? (
+                  <div className="flex justify-center items-center h-full">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                  </div>
+                ) : timeSeriesApi.error ? (
+                  <div className="text-red-500 text-center">データの取得に失敗しました</div>
+                ) : timeSeriesApi.data ? (
+                  <Line
+                    data={getTimeSeriesChartData() || { labels: [], datasets: [] }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'top',
+                        },
+                      },
+                      scales: {
+                        y: {
+                          beginAtZero: true,
+                        },
+                      },
+                    }}
+                  />
+                ) : (
+                  <div className="text-gray-500 text-center">データがありません</div>
+                )}
+              </div>
+            </div>
+    
+            {/* 重要度分布 */}
+            <div className="lg:col-span-6 bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-4">重要度分布</h2>
+              <div className="h-64">
+                {timeSeriesApi.loading ? (
+                  <div className="flex justify-center items-center h-full">
+                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
+                  </div>
+                ) : timeSeriesApi.error ? (
+                  <div className="text-red-500 text-center">データの取得に失敗しました</div>
+                ) : timeSeriesApi.data ? (
+                  <Pie
+                    data={getSeverityChartData() || { labels: [], datasets: [] }}
+                    options={{
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                        legend: {
+                          position: 'right',
+                        },
+                      },
+                    }}
+                  />
+                ) : (
+                  <div className="text-gray-500 text-center">データがありません</div>
+                )}
+              </div>
+            </div>
+    
+            {/* イベントタイプ分布 */}
+            <div className="lg:col-span-6 bg-white rounded-lg shadow p-6">
+              <h2 className="text-lg font-semibold mb-4">イベントタイプ分布</h2>
+              <div className="h-64">
+                <Bar
+                  data={getEventTypeChartData()}
+                  options={{
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                    },
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                      },
+                    },
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default Dashboard;

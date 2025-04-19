@@ -72,20 +72,16 @@ const Alerts: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <Head>
         <title>アラート - さくらセキュリティガード</title>
         <meta name="description" content="セキュリティアラートの一覧と管理" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">アラート</h1>
-        </div>
-      </header>
+      <h1 className="text-2xl font-bold mb-6">アラート</h1>
 
-      <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <div>
         {/* フィルターセクション */}
         <div className="bg-white shadow rounded-lg mb-6 p-4">
           <h2 className="text-lg font-medium text-gray-900 mb-4">フィルター</h2>
@@ -219,7 +215,7 @@ const Alerts: NextPage = () => {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

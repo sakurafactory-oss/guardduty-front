@@ -1,0 +1,40 @@
+{
+  "allLinks": [
+    "/",
+    "/api/security-events",
+    "/dashboard",
+    "/security-events",
+    "/alerts",
+    "/settings",
+    "/api/dashboard/layouts",
+    "/api/dashboard/widgets",
+    "/api/dashboard/time-series",
+    "/api/dashboard/geo-distribution",
+    "/api/alerts"
+  ],
+  "existingPages": [
+    "/settings",
+    "/security-events",
+    "/",
+    "/dashboard",
+    "/alerts",
+    "/_app"
+  ],
+  "dynamicRoutes": [
+    "/security-event-detail/[id]",
+    "/alert-detail/[id]"
+  ],
+  "apiRoutes": [
+    "/api/security-events",
+    "/api/alerts",
+    "/api/security-events/",
+    "/api/security-events/[id]",
+    "/api/dashboard/widgets",
+    "/api/dashboard/time-series",
+    "/api/dashboard/layouts",
+    "/api/dashboard/geo-distribution",
+    "/api/alerts/",
+    "/api/alerts/[id]"
+  ],
+  "missingPages": []
+}

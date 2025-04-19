@@ -27,11 +27,27 @@ export default function handler(
 
     // モックデータの読み込み
     const dataFilePath = path.join(process.cwd(), 'data', 'alerts', 'alerts.json');
+    
+    // ファイルが存在するか確認
+    if (!fs.existsSync(dataFilePath)) {
+      console.error(`File not found: ${dataFilePath}`);
+      return res.status(404).json({ message: 'Alerts data file not found' });
+    }
+    
     const fileContents = fs.readFileSync(dataFilePath, 'utf8');
-    const alerts: Alert[] = JSON.parse(fileContents);
+    let alerts: Alert[] = [];
+    
+    try {
+      const parsedData = JSON.parse(fileContents);
+      // データが { alerts: [...] } 形式の場合と配列の場合の両方に対応
+      alerts = parsedData.alerts || (Array.isArray(parsedData) ? parsedData : []);
+    } catch (parseError) {
+      console.error('Error parsing alerts JSON:', parseError);
+      return res.status(500).json({ message: 'Error parsing alerts data' });
+    }
 
     // フィルタリング
-    let filteredAlerts = [...alerts];
+    let filteredAlerts = Array.isArray(alerts) ? [...alerts] : [];
     
     if (severity && severity !== 'all') {
       filteredAlerts = filteredAlerts.filter(alert => alert.severity === severity);

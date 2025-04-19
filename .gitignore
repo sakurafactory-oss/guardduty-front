@@ -102,3 +102,13 @@ coverage/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# cypress
+cypress/videos
+cypress/screenshots
+cypress/fixtures
+cypress/downloads
+cypress/support
+cypress/plugins
+cypress/runner
+cypress/integration
